@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { getUsers, changeUsers } from "../services/getFetch";
+import logo from "../../images/logo.svg";
+import mainImage from "../../images/main_card_picture.png";
+import { getUsers, changeUsers } from "../../services/getFetch";
+import {
+  Avatar,
+  AvatarBorder,
+  Card,
+  Logo,
+  MainCardImage,
+  Strip,
+  Tweets,
+  Followers,
+  Button,
+} from "./TweeterCard.styled";
 
-export const Card = () => {
+export const TweeterCard = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -15,7 +28,6 @@ export const Card = () => {
     selectUsers();
   }, []);
 
-  let buttonName = "";
   const newUsers = JSON.parse(JSON.stringify(users));
   const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
 
@@ -50,26 +62,36 @@ export const Card = () => {
       localStorage.setItem("ArrayId", JSON.stringify(ArrayId));
     }
   }
+  let buttonName = "";
 
   return (
-    <ul>
-      {users.map((user) => {
+    <>
+      {users.map(({ id, avatar, user, tweets, followers }) => {
+        const options = { style: "decimal", minimumFractionDigits: 0 };
+        const formattedFollowers = followers.toLocaleString("en-US", options);
         {
-          buttonName = ArrayId.includes(user.id) ? "Unfollow" : "Follow";
+          buttonName = ArrayId.includes(id) ? "FOLLOW" : "FOLLOWING";
         }
         return (
-          <li key={user.id}>
-            <img src={user.avatar} width={62} height={62} alt={user.user} />
-            <p>{user.tweets}</p>
-            <p>TWEETS</p>
-            <p>{user.followers}</p>
-            <p>FOLLOWERS</p>
-            <button type="submit" onClick={() => changeFollowing(user.id)}>
-              {buttonName}
-            </button>
+          <li key={id}>
+            <Card>
+              <Logo alt="GoIt" src={logo} />
+              <MainCardImage alt="abstract" src={mainImage} />
+              <Strip />
+              <AvatarBorder>
+                <Avatar src={avatar} width={62} height={62} alt={user} />
+              </AvatarBorder>
+              <Tweets>{tweets} TWEETS</Tweets>
+
+              <Followers>{formattedFollowers} FOLLOWERS</Followers>
+
+              <Button type="submit" onClick={() => changeFollowing(id)}>
+                {buttonName}
+              </Button>
+            </Card>
           </li>
         );
       })}
-    </ul>
+    </>
   );
 };

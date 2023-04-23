@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { Card } from "./Card";
+import { GlobalStyle } from "../GlobalStyle";
+import { Layout } from "../Layout";
+import { TweeterList } from "./TweeterList/TweeterList";
 
 function App() {
   return (
     <>
-      <div>
-        <Card />
-      </div>
+      <GlobalStyle />
+      <Layout>
+        <TweeterList />
+      </Layout>
     </>
   );
 }
