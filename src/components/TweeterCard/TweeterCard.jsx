@@ -35,7 +35,13 @@ export const TweeterCard = ({ user, changeFollowing }) => {
 
         <Followers>{formattedFollowers} FOLLOWERS</Followers>
 
-        <Button type="submit" onClick={() => changeFollowing(id)}>
+        <Button
+          type="submit"
+          onClick={() => changeFollowing(id)}
+          style={{
+            backgroundColor: buttonName === "FOLLOWING" ? "#5CD3A8" : "#EBD8FF",
+          }}
+        >
           {buttonName}
         </Button>
       </Card>
