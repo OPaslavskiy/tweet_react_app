@@ -11,14 +11,14 @@ export async function getUsers() {
   }
 }
 
-export async function getUser(id) {
-  try {
-    const response = await axios.get(`/users/${id}`);
-    return response.data;
-  } catch (e) {
-    console.log(e);
-  }
-}
+// export async function getUser(id) {
+//   try {
+//     const response = await axios.get(`/users/${id}`);
+//     return response.data;
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }
 
 export async function changeUsers(id, newData) {
   try {

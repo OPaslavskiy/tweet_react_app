@@ -1,44 +1,48 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getUsers, changeUsers, getUser } from "../services/getFetch";
+import { getUsers, changeUsers } from "../services/getFetch";
 
 export const Card = () => {
   const [users, setUsers] = useState([]);
-  //   const [user, setUser] = useState([]);
+  //   const [user, setUser] = useState(0);
 
   useEffect(() => {
     function selectUsers() {
       getUsers()
         .then((data) => {
           setUsers(data);
-          //   Notiflix.Notify.success(
-          //     `We have prepared for you the 20 best movies for today`
-          //   );
         })
-        .catch((err) => {
-          //   Notiflix.Notify.failure(err);
-        });
+        .catch((err) => {});
     }
 
     selectUsers();
   }, []);
 
-  const changeFollowing = async (id) => {
-    try {
-      await getUser(id).then((data) => {
-        handleChangeTweets(id, data);
-      });
-    } catch (error) {}
-  };
+  async function changeFollowing(id) {
+    const newUsers = JSON.parse(JSON.stringify(users));
+    const followers = newUsers.find((user) => user.id === id).followers + 1;
+    const apdateUsers = newUsers.map((user) => {
+      if (user.id === id) {
+        return { ...user, followers: followers };
+      } else {
+        return user;
+      }
+    });
 
-  const handleChangeTweets = (id, data) => {
-    const updatedUser = { ...data };
+    // console.log(newArray);
+    setUsers(apdateUsers);
 
-    updatedUser.followers = updatedUser.followers + 1;
-    console.log(updatedUser);
+    // console.log(newUsers);
+    //
+    // const userApdete = (newUsers.find((user) => user.id === id).followers =
+    //   followers + 1);
 
-    changeUsers(id, updatedUser);
-  };
+    // const userApdete = newUsers.find((user) => user.id === id);
+    // userApdete.followers = followers + 1;
+    // console.log(userApdete);
+
+    // changeUsers(id, user);
+  }
 
   return (
     <div>
