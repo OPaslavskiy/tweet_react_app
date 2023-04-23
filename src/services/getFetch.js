@@ -23,7 +23,7 @@ export async function getUsers() {
 export async function changeUsers(id, newData) {
   try {
     const response = await axios.put(`/users/${id}`, newData);
-    console.log(response.data);
+
     return response.data;
   } catch (e) {
     console.log(e);

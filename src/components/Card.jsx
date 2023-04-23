@@ -1,10 +1,8 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getUsers, changeUsers } from "../services/getFetch";
 
 export const Card = () => {
   const [users, setUsers] = useState([]);
-  //   const [user, setUser] = useState(0);
 
   useEffect(() => {
     function selectUsers() {
@@ -14,13 +12,14 @@ export const Card = () => {
         })
         .catch((err) => {});
     }
-
     selectUsers();
   }, []);
 
-  async function changeFollowing(id) {
-    const newUsers = JSON.parse(JSON.stringify(users));
-    const followers = newUsers.find((user) => user.id === id).followers + 1;
+  let buttonName = "";
+  const newUsers = JSON.parse(JSON.stringify(users));
+  const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
+
+  function updateFollowers(followers, id) {
     const apdateUsers = newUsers.map((user) => {
       if (user.id === id) {
         return { ...user, followers: followers };
@@ -28,42 +27,49 @@ export const Card = () => {
         return user;
       }
     });
-
-    // console.log(newArray);
     setUsers(apdateUsers);
+    const userApdete = newUsers.find((user) => user.id === id);
+    userApdete.followers = followers;
+    changeUsers(id, userApdete);
+  }
 
-    // console.log(newUsers);
-    //
-    // const userApdete = (newUsers.find((user) => user.id === id).followers =
-    //   followers + 1);
+  async function changeFollowing(id) {
+    const hasIdLocalStorege = ArrayId.includes(id);
 
-    // const userApdete = newUsers.find((user) => user.id === id);
-    // userApdete.followers = followers + 1;
-    // console.log(userApdete);
+    if (hasIdLocalStorege) {
+      const followers = newUsers.find((user) => user.id === id).followers - 1;
+      const UpdateArrayId = ArrayId.filter((item) => item !== id);
 
-    // changeUsers(id, user);
+      updateFollowers(followers, id);
+      localStorage.setItem("ArrayId", JSON.stringify(UpdateArrayId));
+    } else {
+      const followers = newUsers.find((user) => user.id === id).followers + 1;
+      updateFollowers(followers, id);
+
+      ArrayId.push(id);
+      localStorage.setItem("ArrayId", JSON.stringify(ArrayId));
+    }
   }
 
   return (
-    <div>
+    <ul>
       {users.map((user) => {
+        {
+          buttonName = ArrayId.includes(user.id) ? "Unfollow" : "Follow";
+        }
         return (
-          <div key={user.id}>
+          <li key={user.id}>
             <img src={user.avatar} width={62} height={62} alt={user.user} />
             <p>{user.tweets}</p>
             <p>TWEETS</p>
             <p>{user.followers}</p>
             <p>FOLLOWERS</p>
             <button type="submit" onClick={() => changeFollowing(user.id)}>
-              FOLLOW
+              {buttonName}
             </button>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 };
-
-//        <div>
-
-// </div>
