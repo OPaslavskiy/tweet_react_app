@@ -40,6 +40,8 @@ export const Link = styled(NavLink)`
 
 export const LogoLink = styled(NavLink)`
   display: flex;
+  font-family: "Montserrat";
+  font-style: normal;
   align-items: center;
   color: #fff;
   text-decoration: none;
@@ -47,4 +49,7 @@ export const LogoLink = styled(NavLink)`
   font-weight: bold;
   margin-left: 14px;
   line-height: 1.2;
+  &.active {
+    color: #1976d2;
+  }
 `;

@@ -25,7 +25,7 @@ export const TweeterCard = ({ user, changeFollowing }) => {
   let buttonName = "";
   const options = { style: "decimal", minimumFractionDigits: 0 };
   const formattedFollowers = followers.toLocaleString("en-US", options);
-  buttonName = ArrayId.includes(id) ? "FOLLOW" : "FOLLOWING";
+  buttonName = ArrayId.includes(id) ? "FOLLOWING" : "FOLLOW";
 
   return (
     <li>
