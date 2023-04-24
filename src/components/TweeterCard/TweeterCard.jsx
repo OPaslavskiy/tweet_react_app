@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../images/logo.svg";
 import mainImage from "../../images/main_card_picture.png";
-import { getUsers, changeUsers } from "../../services/getFetch";
+// import {
+//   getUsers,
+//   getUsersPerPage,
+//   changeUsers,
+//   getAllUsers,
+// } from "../../services/getFetch";
 import {
   Avatar,
   AvatarBorder,

@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://6444faf9b80f57f581ae9580.mockapi.io";
 
-export async function getUsers(page) {
+export async function getUsersPerPage(page) {
   try {
     const response = await axios.get(`/users?page=${page}&limit=3`);
     return response.data;
@@ -11,14 +11,14 @@ export async function getUsers(page) {
   }
 }
 
-// export async function getUser(id) {
-//   try {
-//     const response = await axios.get(`/users/${id}`);
-//     return response.data;
-//   } catch (e) {
-//     console.log(e);
-//   }
-// }
+export async function getAllUsers() {
+  try {
+    const response = await axios.get(`/users`);
+    return response.data.length / 3;
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export async function changeUsers(id, newData) {
   try {

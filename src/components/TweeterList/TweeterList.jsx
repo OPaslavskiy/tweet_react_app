@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { TweeterCard } from "../TweeterCard/TweeterCard";
 import { List } from "./TweeterList.styled";
-import { getUsers, changeUsers } from "../../services/getFetch";
+import {
+  getUsersPerPage,
+  changeUsers,
+  getAllUsers,
+} from "../../services/getFetch";
 import Button from "@mui/material/Button";
 export const TweeterList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const [showBtn, setShowBtn] = useState(true);
 
   useEffect(() => {
     selectUsers();
   }, [page]);
 
+  useEffect(() => {
+    getAllUsers()
+      .then((data) => {
+        setTotalPages(Math.ceil(data));
+      })
+      .catch((err) => {});
+  }, []);
+
   function selectUsers() {
-    console.log(`selectUsers`);
-    getUsers(page)
+    getUsersPerPage(page)
       .then((data) => {
         setUsers([...users, ...data]);
       })
@@ -21,15 +34,16 @@ export const TweeterList = () => {
   }
 
   function LoadMore() {
-    console.log(`LoadMore`);
     setPage(page + 1);
+    if (page === totalPages) {
+      setShowBtn(false);
+    }
   }
 
   const newUsers = JSON.parse(JSON.stringify(users));
   const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
 
   function updateFollowers(followers, id) {
-    console.log(`updateFollowers`);
     const apdateUsers = newUsers.map((user) => {
       if (user.id === id) {
         return { ...user, followers: followers };
@@ -71,9 +85,11 @@ export const TweeterList = () => {
           />
         ))}
       </List>
-      <Button variant="contained" type="button" onClick={() => LoadMore()}>
-        Load More
-      </Button>
+      {showBtn && (
+        <Button variant="contained" type="button" onClick={() => LoadMore()}>
+          Load More
+        </Button>
+      )}
     </>
   );
 };
