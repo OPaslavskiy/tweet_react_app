@@ -2,24 +2,34 @@ import React, { useState, useEffect } from "react";
 import { TweeterCard } from "../TweeterCard/TweeterCard";
 import { List } from "./TweeterList.styled";
 import { getUsers, changeUsers } from "../../services/getFetch";
+import Button from "@mui/material/Button";
 export const TweeterList = () => {
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    function selectUsers() {
-      getUsers()
-        .then((data) => {
-          setUsers(data);
-        })
-        .catch((err) => {});
-    }
     selectUsers();
-  }, []);
+  }, [page]);
+
+  function selectUsers() {
+    console.log(`selectUsers`);
+    getUsers(page)
+      .then((data) => {
+        setUsers([...users, ...data]);
+      })
+      .catch((err) => {});
+  }
+
+  function LoadMore() {
+    console.log(`LoadMore`);
+    setPage(page + 1);
+  }
 
   const newUsers = JSON.parse(JSON.stringify(users));
   const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
 
   function updateFollowers(followers, id) {
+    console.log(`updateFollowers`);
     const apdateUsers = newUsers.map((user) => {
       if (user.id === id) {
         return { ...user, followers: followers };
@@ -61,7 +71,9 @@ export const TweeterList = () => {
           />
         ))}
       </List>
-      <button type="button">Load More</button>
+      <Button variant="contained" type="button" onClick={() => LoadMore()}>
+        Load More
+      </Button>
     </>
   );
 };
