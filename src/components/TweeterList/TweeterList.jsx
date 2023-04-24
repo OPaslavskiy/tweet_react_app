@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { TweeterCard } from "../TweeterCard/TweeterCard";
 import { List } from "./TweeterList.styled";
+import { useLocation } from "react-router-dom";
 import {
   getUsersPerPage,
   changeUsers,
-  getAllUsers,
+  getTotalPage,
 } from "../../services/getFetch";
 import Button from "@mui/material/Button";
 export const TweeterList = () => {
@@ -18,7 +19,7 @@ export const TweeterList = () => {
   }, [page]);
 
   useEffect(() => {
-    getAllUsers()
+    getTotalPage()
       .then((data) => {
         setTotalPages(Math.ceil(data));
       })
@@ -34,8 +35,10 @@ export const TweeterList = () => {
   }
 
   function LoadMore() {
+    console.log(page);
+    console.log(totalPages);
     setPage(page + 1);
-    if (page === totalPages) {
+    if (page + 1 === totalPages) {
       setShowBtn(false);
     }
   }
@@ -59,6 +62,7 @@ export const TweeterList = () => {
 
   async function changeFollowing(id) {
     const hasIdLocalStorege = ArrayId.includes(id);
+    const location = useLocation();
 
     if (hasIdLocalStorege) {
       const followers = newUsers.find((user) => user.id === id).followers - 1;
@@ -77,6 +81,9 @@ export const TweeterList = () => {
   return (
     <>
       <List>
+        {console.log("tweets", location)}
+        {/* to={location.state.from} */}
+        <button to={location.state.from}>Go to home</button>
         {users.map((user) => (
           <TweeterCard
             key={user.id}
