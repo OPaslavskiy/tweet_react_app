@@ -7,7 +7,12 @@ export const Header = styled.header`
   padding: 15px;
   padding-left: 64px;
   padding-right: 64px;
-  background-color: #2c3e50;
+  background: linear-gradient(
+    114.99deg,
+    #471ca9 -0.99%,
+    #5736a3 54.28%,
+    #4b2a99 78.99%
+  );
 `;
 
 export const Logo = styled.div`

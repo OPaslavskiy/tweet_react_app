@@ -3,6 +3,7 @@ import { TweeterCard } from "../TweeterCard/TweeterCard";
 import { List, ButtonBack, Div } from "./TweeterList.styled";
 import { Link, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { animateScroll as scroll } from "react-scroll";
 import {
   getUsersPerPage,
   changeUsers,
@@ -36,6 +37,7 @@ export const TweeterList = () => {
   }
 
   function LoadMore() {
+    scroll.scrollMore(window.innerHeight - 125);
     setPage(page + 1);
     if (page + 1 === totalPages) {
       setShowBtn(false);

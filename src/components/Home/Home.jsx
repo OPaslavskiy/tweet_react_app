@@ -6,13 +6,14 @@ export const Home = () => {
   const location = useLocation();
   return (
     <div style={{ textAlign: "center" }}>
-      <h3>
-        This application is made for people who want to have all their friends'
-        numbers in one place.!!!!!!!!!!
-      </h3>
       <Link to="tweets" state={{ from: location }}>
         Your bloggers are here.
       </Link>
+      <p style={{ marginTop: "20px" }}>
+        I am the developer of this website. My name Oleh.
+      </p>
+      <a href="https://github.com/OPaslavskiy">This is my page on GitHub.</a>{" "}
+      <p>I hope you enjoy using it!</p>
     </div>
   );
 };
