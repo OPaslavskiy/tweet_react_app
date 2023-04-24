@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { TweeterCard } from "../TweeterCard/TweeterCard";
-import { List } from "./TweeterList.styled";
-import { useLocation } from "react-router-dom";
+import { List, ButtonBack, Div } from "./TweeterList.styled";
+import { Link, useLocation } from "react-router-dom";
+import Button from "@mui/material/Button";
 import {
   getUsersPerPage,
   changeUsers,
   getTotalPage,
 } from "../../services/getFetch";
-import Button from "@mui/material/Button";
 export const TweeterList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
   const [showBtn, setShowBtn] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     selectUsers();
@@ -35,8 +36,6 @@ export const TweeterList = () => {
   }
 
   function LoadMore() {
-    console.log(page);
-    console.log(totalPages);
     setPage(page + 1);
     if (page + 1 === totalPages) {
       setShowBtn(false);
@@ -62,7 +61,6 @@ export const TweeterList = () => {
 
   async function changeFollowing(id) {
     const hasIdLocalStorege = ArrayId.includes(id);
-    const location = useLocation();
 
     if (hasIdLocalStorege) {
       const followers = newUsers.find((user) => user.id === id).followers - 1;
@@ -80,10 +78,11 @@ export const TweeterList = () => {
   }
   return (
     <>
+      <Div>
+        <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
+      </Div>
+
       <List>
-        {console.log("tweets", location)}
-        {/* to={location.state.from} */}
-        <button to={location.state.from}>Go to home</button>
         {users.map((user) => (
           <TweeterCard
             key={user.id}
@@ -92,11 +91,13 @@ export const TweeterList = () => {
           />
         ))}
       </List>
-      {showBtn && (
-        <Button variant="contained" type="button" onClick={() => LoadMore()}>
-          Load More
-        </Button>
-      )}
+      <Div>
+        {showBtn && (
+          <Button variant="contained" type="button" onClick={() => LoadMore()}>
+            Load More
+          </Button>
+        )}
+      </Div>
     </>
   );
 };
