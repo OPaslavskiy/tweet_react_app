@@ -1,4 +1,3 @@
-import Dropdown from "react-dropdown";
 import React from "react";
 import { Drop, Div } from "./FilterTweets.style";
 import "react-dropdown/style.css";
