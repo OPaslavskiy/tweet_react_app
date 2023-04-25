@@ -6,7 +6,7 @@ const Home = () => {
   const location = useLocation();
   return (
     <div style={{ textAlign: "center" }}>
-      <Link to="tweets" state={{ from: location }}>
+      <Link to="/tweets" state={{ from: location }}>
         Your bloggers are here.
       </Link>
       <P style={{ marginTop: "20px" }}>
