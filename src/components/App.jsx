@@ -3,7 +3,7 @@ import { Layout } from "../Layout";
 import { TweeterList } from "./TweeterList/TweeterList";
 import { AppBar } from "./AppBar/AppBar";
 import { Home } from "../components/Home/Home";
-import { useEffect, lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 function App() {

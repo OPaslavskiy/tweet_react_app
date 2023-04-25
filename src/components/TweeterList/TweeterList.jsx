@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { TweeterCard } from "../TweeterCard/TweeterCard";
-import { List, ButtonBack, Div } from "./TweeterList.styled";
 import { useLocation } from "react-router-dom";
-import Button from "@mui/material/Button";
 import { animateScroll as scroll } from "react-scroll";
+
+import { TweeterCard } from "../TweeterCard/TweeterCard";
+import { Loader } from "../Loader/Loader";
+import { List, ButtonBack, Div } from "./TweeterList.styled";
+
+import Button from "@mui/material/Button";
+
 import { FiterTweets } from "../FilterTweets/FilterTweets";
 import {
   getUsersPerPage,
@@ -17,6 +21,7 @@ export const TweeterList = () => {
   const [totalPages, setTotalPages] = useState();
   const [showBtn, setShowBtn] = useState(true);
   const [filter, setFilter] = useState("SHOW ALL");
+  const [status, setStatus] = useState("pending");
   const location = useLocation();
 
   const newUsers = JSON.parse(JSON.stringify(users));
@@ -25,24 +30,25 @@ export const TweeterList = () => {
   let filteredUsers;
 
   useEffect(() => {
-    selectUsers();
+    getUsersPerPage(page)
+      .then((data) => {
+        setUsers((prev) => [...prev, ...data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [page]);
 
   useEffect(() => {
     getAllUser()
       .then((data) => {
+        setStatus("stoped");
         setTotalPages(Math.ceil(data.length / 3));
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-  function selectUsers() {
-    getUsersPerPage(page)
-      .then((data) => {
-        setUsers([...users, ...data]);
-      })
-      .catch((err) => {});
-  }
 
   function loadMore() {
     scroll.scrollMore(window.innerHeight - 125);
@@ -52,8 +58,8 @@ export const TweeterList = () => {
     }
   }
 
-  function onSelectFilter(e) {
-    setFilter(e.value);
+  function onSelectFilter(event) {
+    setFilter(event.value);
   }
 
   if (filter === "SHOW ALL") {
@@ -67,14 +73,10 @@ export const TweeterList = () => {
   }
 
   function updateFollowers(followers, id) {
-    const apdateUsers = newUsers.map((user) => {
-      if (user.id === id) {
-        return { ...user, followers: followers };
-      } else {
-        return user;
-      }
-    });
-    setUsers(apdateUsers);
+    setUsers(() =>
+      newUsers.map((user) => (user.id === id ? { ...user, followers } : user))
+    );
+
     const userApdete = newUsers.find((user) => user.id === id);
     userApdete.followers = followers;
     changeUsers(id, userApdete);
@@ -102,25 +104,33 @@ export const TweeterList = () => {
       <Div>
         <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
       </Div>
-
       <FiterTweets onSelectFilter={onSelectFilter} />
-
-      <List>
-        {filteredUsers.map((user) => (
-          <TweeterCard
-            key={user.id}
-            user={user}
-            changeFollowing={changeFollowing}
-          />
-        ))}
-      </List>
-      <Div>
-        {showBtn && (
-          <Button variant="contained" type="button" onClick={() => loadMore()}>
-            Load More
-          </Button>
-        )}
-      </Div>
+      {status === "pending" ? (
+        <Loader />
+      ) : (
+        <>
+          <List>
+            {filteredUsers.map((user) => (
+              <TweeterCard
+                key={user.id}
+                user={user}
+                changeFollowing={changeFollowing}
+              />
+            ))}
+          </List>
+          <Div>
+            {showBtn && (
+              <Button
+                variant="contained"
+                type="button"
+                onClick={() => loadMore()}
+              >
+                {filteredUsers.length === 0 ? `Load ${filter}` : `Load more`}
+              </Button>
+            )}
+          </Div>
+        </>
+      )}
     </>
   );
 };

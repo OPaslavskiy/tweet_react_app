@@ -1,5 +1,6 @@
 import Dropdown from "react-dropdown";
 import React from "react";
+import { Drop, Div } from "./FilterTweets.style";
 import "react-dropdown/style.css";
 
 export const FiterTweets = ({ onSelectFilter }) => {
@@ -7,11 +8,13 @@ export const FiterTweets = ({ onSelectFilter }) => {
   const defaultOption = options[0];
 
   return (
-    <Dropdown
-      options={options}
-      onChange={onSelectFilter}
-      value={defaultOption}
-      placeholder="Select an option"
-    />
+    <Div>
+      <Drop
+        options={options}
+        onChange={onSelectFilter}
+        value={defaultOption}
+        placeholder="Select an option"
+      />
+    </Div>
   );
 };

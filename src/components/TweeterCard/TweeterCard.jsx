@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import logo from "../../images/logo.svg";
 import mainImage from "../../images/main_card_picture.png";
-// import {
-//   getUsers,
-//   getUsersPerPage,
-//   changeUsers,
-//   getAllUsers,
-// } from "../../services/getFetch";
 import {
   Avatar,
   AvatarBorder,
@@ -19,13 +13,16 @@ import {
   Button,
 } from "./TweeterCard.styled";
 
-export const TweeterCard = ({ user, changeFollowing }) => {
+export const TweeterCard = ({
+  user: { tweets, followers, avatar, id, user },
+  changeFollowing,
+}) => {
   const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
-  const { tweets, followers, avatar, id } = user;
-  let buttonName = "";
+
   const options = { style: "decimal", minimumFractionDigits: 0 };
   const formattedFollowers = followers.toLocaleString("en-US", options);
-  buttonName = ArrayId.includes(id) ? "FOLLOWING" : "FOLLOW";
+
+  let buttonName = ArrayId.includes(id) ? "FOLLOWING" : "FOLLOW";
 
   return (
     <li>
@@ -34,7 +31,7 @@ export const TweeterCard = ({ user, changeFollowing }) => {
         <MainCardImage alt="abstract" src={mainImage} />
         <Strip />
         <AvatarBorder>
-          <Avatar src={avatar} width={62} height={62} alt={user.user} />
+          <Avatar src={avatar} width={62} height={62} alt={user} />
         </AvatarBorder>
         <Tweets>{tweets} TWEETS</Tweets>
 
