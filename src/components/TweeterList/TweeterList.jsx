@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { animateScroll as scroll } from "react-scroll";
 
 import { TweeterCard } from "../TweeterCard/TweeterCard";
@@ -22,7 +21,6 @@ const TweeterList = () => {
   const [showBtn, setShowBtn] = useState(true);
   const [filter, setFilter] = useState("SHOW ALL");
   const [status, setStatus] = useState("pending");
-  const location = useLocation();
 
   const newUsers = JSON.parse(JSON.stringify(users));
   const ArrayId = JSON.parse(localStorage.getItem("ArrayId")) || [];
@@ -102,7 +100,7 @@ const TweeterList = () => {
   return (
     <>
       <Div>
-        <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
+        <ButtonBack to={"/"}>GO TO BACK</ButtonBack>
       </Div>
       <FiterTweets onSelectFilter={onSelectFilter} />
       {status === "pending" ? (

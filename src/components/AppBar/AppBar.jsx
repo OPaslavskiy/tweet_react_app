@@ -10,7 +10,7 @@ export const AppBar = () => {
         <RiContactsFill style={{ color: "#fff" }} />
         Home
       </LogoLink>
-      <LogoLink to="/tweets">
+      <LogoLink to="tweets">
         <BsFilePostFill style={{ color: "#fff" }} />
         Tweets
       </LogoLink>
