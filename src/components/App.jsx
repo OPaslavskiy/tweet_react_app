@@ -14,6 +14,7 @@ function App() {
   return (
     <>
       <AppBar />
+      <div>1111111</div>
       <GlobalStyle />
       <Layout>
         <Suspense fallback={<div>Loading subpage...</div>}>
