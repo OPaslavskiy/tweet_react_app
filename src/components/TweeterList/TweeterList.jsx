@@ -103,7 +103,7 @@ export const TweeterList = () => {
     <>
       <Div>
         {console.log(location.state.from.pathname)}
-        <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
+        <ButtonBack to={location.state.from.pathname}>GO TO BACK</ButtonBack>
       </Div>
       <FiterTweets onSelectFilter={onSelectFilter} />
       {status === "pending" ? (
