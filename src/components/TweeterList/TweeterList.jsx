@@ -102,6 +102,7 @@ export const TweeterList = () => {
   return (
     <>
       <Div>
+        {console.log(location)}
         <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
       </Div>
       <FiterTweets onSelectFilter={onSelectFilter} />

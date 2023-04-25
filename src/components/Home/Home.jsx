@@ -1,11 +1,12 @@
 import React from "react";
-import { Link, Contacts, P } from "./Home.styled";
+import { Link, P } from "./Home.styled";
 import { useLocation } from "react-router-dom";
 
 export const Home = () => {
   const location = useLocation();
   return (
     <div style={{ textAlign: "center" }}>
+      {console.log(location)}
       <Link to="tweets" state={{ from: location }}>
         Your bloggers are here.
       </Link>
