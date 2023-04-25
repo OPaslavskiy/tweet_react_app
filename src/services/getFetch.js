@@ -11,7 +11,7 @@ export async function getUsersPerPage(page) {
   }
 }
 
-export async function getTotalPage() {
+export async function getAllUser() {
   try {
     const response = await axios.get(`/users`);
     return response.data.length / 3;
