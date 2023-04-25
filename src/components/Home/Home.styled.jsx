@@ -9,6 +9,11 @@ export const Link = styled(NavLink)`
   font-weight: bold;
   line-height: 1.2;
   margin-bottom: 20px;
+
+  &:hover,
+  &:focus {
+    color: #1976d2;
+  }
 `;
 
 export const Contacts = styled.div`
@@ -21,4 +26,11 @@ export const Contacts = styled.div`
 export const P = styled.p`
   font-family: "Montserrat";
   font-style: normal;
+`;
+
+export const GitLink = styled.a`
+  &:hover,
+  &:focus {
+    color: #1976d2;
+  }
 `;

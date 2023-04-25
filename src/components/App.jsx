@@ -19,7 +19,7 @@ function App() {
         <Suspense fallback={<div>Loading subpage...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="tweets" element={<TweeterList />} />
+            <Route path="/tweets" element={<TweeterList />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>

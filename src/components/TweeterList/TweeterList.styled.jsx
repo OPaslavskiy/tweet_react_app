@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const List = styled.ul`
   display: flex;
@@ -53,6 +53,11 @@ export const ButtonBack = styled(Link)`
   background-color: #1976d2;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+
+  &:hover,
+  &:focus {
+    color: #5cd3a8;
+  }
 `;
 
 export const Div = styled.div`

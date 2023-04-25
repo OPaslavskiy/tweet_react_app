@@ -52,4 +52,9 @@ export const LogoLink = styled(NavLink)`
   &.active {
     color: #1976d2;
   }
+
+  &:hover,
+  &:focus {
+    color: #5cd3a8;
+  }
 `;
