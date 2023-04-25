@@ -1,10 +1,14 @@
+import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
 import { GlobalStyle } from "../GlobalStyle";
 import { Layout } from "../Layout";
-import { TweeterList } from "./TweeterList/TweeterList";
 import { AppBar } from "./AppBar/AppBar";
-import { Home } from "../components/Home/Home";
-import { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+
+const Home = lazy(() => import("../components/Home/Home"));
+const TweeterList = lazy(() =>
+  import("../../src/components/TweeterList/TweeterList")
+);
 
 function App() {
   return (
@@ -15,7 +19,7 @@ function App() {
         <Suspense fallback={<div>Loading subpage...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="tweets" element={<TweeterList />} />
+            <Route path="/tweets" element={<TweeterList />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>

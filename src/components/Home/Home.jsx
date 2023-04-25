@@ -2,11 +2,10 @@ import React from "react";
 import { Link, P } from "./Home.styled";
 import { useLocation } from "react-router-dom";
 
-export const Home = () => {
+const Home = () => {
   const location = useLocation();
   return (
     <div style={{ textAlign: "center" }}>
-      {console.log(location)}
       <Link to="tweets" state={{ from: location }}>
         Your bloggers are here.
       </Link>
@@ -18,3 +17,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

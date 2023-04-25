@@ -15,7 +15,7 @@ import {
   getAllUser,
 } from "../../services/getFetch";
 
-export const TweeterList = () => {
+const TweeterList = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState();
@@ -102,8 +102,7 @@ export const TweeterList = () => {
   return (
     <>
       <Div>
-        {/* {console.log(location.state.from.pathname)} */}
-        <ButtonBack>GO TO BACK</ButtonBack>
+        <ButtonBack to={location.state.from}>GO TO BACK</ButtonBack>
       </Div>
       <FiterTweets onSelectFilter={onSelectFilter} />
       {status === "pending" ? (
@@ -135,3 +134,5 @@ export const TweeterList = () => {
     </>
   );
 };
+
+export default TweeterList;
